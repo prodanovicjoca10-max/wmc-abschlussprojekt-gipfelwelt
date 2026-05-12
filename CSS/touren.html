@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GipfelWelt | Touren</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg-soft:#111a2b;
+      --card:#121c30;
+      --card-2:#18243c;
+      --text:#eef4ff;
+      --muted:#b8c4d9;
+      --gold:#d9b75d;
+      --gold-strong:#f0ca68;
+      --line:rgba(255,255,255,0.08);
+      --shadow:0 20px 50px rgba(0,0,0,0.35);
+      --radius:22px;
+      --max:1240px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Outfit',sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(217,183,93,0.12), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(83,114,164,0.18), transparent 30%),
+        linear-gradient(180deg, #08101b 0%, #0b1220 40%, #0d1524 100%);
+      color:var(--text);
+      line-height:1.7;
+      overflow-x:hidden;
+    }
+
+    img{
+      display:block;
+      width:100%;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    ul{
+      list-style:none;
+    }
+
+    .container{
+      width:min(var(--max), calc(100% - 40px));
+      margin-inline:auto;
+    }
+
+    .section{
+      padding:100px 0;
+      position:relative;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:end;
+      margin-bottom:36px;
+      flex-wrap:wrap;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--gold);
+      font-weight:700;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.82rem;
+      margin-bottom:14px;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:38px;
+      height:1px;
+      background:var(--gold);
+      display:block;
+    }
+
+    .section h2{
+      font-size:clamp(2rem, 4vw, 3.2rem);
+      line-height:1.1;
+      margin-bottom:12px;
+    }
+
+    .section-head p{
+      max-width:760px;
+      color:var(--muted);
+      font-size:1.02rem;
+    }
+
+    .pill-list{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:24px;
+    }
+
+    .pill{
+      padding:10px 16px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.05);
+      border-radius:999px;
+      color:#f7f8fb;
+      font-size:0.95rem;
+      backdrop-filter:blur(10px);
+    }
+
+    nav{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      z-index:1200;
+      transition:0.35s ease;
+      border-bottom:1px solid transparent;
+    }
+
+    nav.scrolled{
+      background:rgba(7,12,22,0.82);
+      backdrop-filter:blur(16px);
+      border-color:rgba(255,255,255,0.08);
+      box-shadow:0 10px 30px rgba(0,0,0,0.22);
+    }
+
+    .nav-inner{
+      width:min(var(--max), calc(100% - 40px));
+      margin-inline:auto;
+      min-height:82px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      font-size:1.2rem;
+      letter-spacing:0.02em;
+    }
+
+    .logo-icon{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, var(--gold), #8f6a18);
+      color:#101316;
+      box-shadow:var(--shadow);
+      font-size:1rem;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:22px;
+    }
+
+    .nav-links a{
+      color:#edf2fb;
+      font-weight:500;
+      position:relative;
+      transition:0.25s ease;
+    }
+
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-6px;
+      width:0;
+      height:2px;
+      background:var(--gold);
+      transition:0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:var(--gold-strong);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after{
+      width:100%;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .menu-btn{
+      display:none;
+      width:46px;
+      height:46px;
+      border:none;
+      border-radius:12px;
+      background:rgba(255,255,255,0.08);
+      color:white;
+      font-size:1.05rem;
+      cursor:pointer;
+    }
+
+    header{
+      min-height:78vh;
+      position:relative;
+      display:flex;
+      align-items:center;
+      isolation:isolate;
+      overflow:hidden;
+    }
+
+    header::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(6,10,18,0.82) 0%, rgba(6,10,18,0.55) 45%, rgba(6,10,18,0.30) 100%),
+        linear-gradient(180deg, rgba(6,10,18,0.10), rgba(6,10,18,0.60));
+      z-index:-1;
+    }
+
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      z-index:-2;
+      background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;
+      transform:scale(1.05);
+    }
+
+    .hero-grid{
+      width:min(var(--max), calc(100% - 40px));
+      margin-inline:auto;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:40px;
+      align-items:center;
+      padding:130px 0 70px;
+    }
+
+    .hero-copy{
+      max-width:760px;
+    }
+
+    .hero-copy h1{
+      font-size:clamp(2.8rem, 7vw, 5.2rem);
+      line-height:0.98;
+      margin-bottom:22px;
+      letter-spacing:-0.03em;
+    }
+
+    .hero-copy p{
+      font-size:1.12rem;
+      color:#e6edf8;
+      max-width:720px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-top:34px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:15px 24px;
+      border-radius:14px;
+      font-weight:700;
+      transition:0.28s ease;
+      border:1px solid transparent;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--gold), var(--gold-strong));
+      color:#11161f;
+      box-shadow:0 12px 30px rgba(217,183,93,0.25);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 34px rgba(217,183,93,0.34);
+    }
+
+    .btn-secondary{
+      border-color:rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.05);
+      color:white;
+      backdrop-filter:blur(12px);
+    }
+
+    .btn-secondary:hover{
+      transform:translateY(-3px);
+      border-color:rgba(217,183,93,0.45);
+      color:var(--gold-strong);
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:24px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      transition:0.3s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(217,183,93,0.32);
+    }
+
+    .card-content{
+      padding:22px;
+    }
+
+    .card h3{
+      font-size:1.3rem;
+      margin-bottom:10px;
+    }
+
+    .card p{
+      color:var(--muted);
+      font-size:0.98rem;
+    }
+
+    .card-icon{
+      width:54px;
+      height:54px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      margin-bottom:18px;
+      background:linear-gradient(135deg, rgba(217,183,93,0.18), rgba(217,183,93,0.08));
+      color:var(--gold-strong);
+      border:1px solid rgba(217,183,93,0.25);
+      font-size:1.2rem;
+    }
+
+    .form-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:28px;
+      padding:30px;
+      box-shadow:var(--shadow);
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-bottom:16px;
+    }
+
+    .label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    input,
+    textarea,
+    select{
+      width:100%;
+      background:#0d1524;
+      color:white;
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:16px;
+      padding:15px 16px;
+      font:inherit;
+      outline:none;
+      transition:0.25s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus{
+      border-color:rgba(217,183,93,0.55);
+      box-shadow:0 0 0 4px rgba(217,183,93,0.10);
+    }
+
+    .top-space{
+      margin-top:32px;
+    }
+
+    .leer-box{
+      padding:20px;
+      border-radius:18px;
+      background:rgba(255,255,255,0.04);
+      border:1px dashed rgba(255,255,255,0.15);
+      color:var(--muted);
+      grid-column:1 / -1;
+    }
+
+    .result-info{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:0.96rem;
+    }
+
+    .wetter-box{
+      padding:20px;
+      border-radius:20px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--text);
+      min-height:120px;
+    }
+
+    .wetter-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .wetter-item{
+      padding:18px;
+      border-radius:18px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .wetter-item span{
+      display:block;
+      color:var(--gold);
+      font-size:0.88rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.05em;
+      margin-bottom:6px;
+    }
+
+    .wetter-item strong{
+      font-size:1.05rem;
+    }
+
+    footer{
+      padding:34px 0;
+      border-top:1px solid rgba(255,255,255,0.08);
+      background:rgba(5,9,16,0.65);
+      backdrop-filter:blur(12px);
+    }
+
+    .footer-inner{
+      width:min(var(--max), calc(100% - 40px));
+      margin-inline:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .footer-text p{
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .footer-social{
+      display:flex;
+      gap:10px;
+    }
+
+    .footer-social a{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.08);
+      transition:0.25s ease;
+    }
+
+    .footer-social a:hover{
+      transform:translateY(-3px);
+      background:rgba(217,183,93,0.16);
+      color:var(--gold-strong);
+      border-color:rgba(217,183,93,0.35);
+    }
+
+    .back-to-top{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      width:52px;
+      height:52px;
+      border:none;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, var(--gold), var(--gold-strong));
+      color:#11161f;
+      font-size:1.05rem;
+      box-shadow:var(--shadow);
+      cursor:pointer;
+      opacity:0;
+      visibility:hidden;
+      transform:translateY(10px);
+      transition:0.28s ease;
+      z-index:1300;
+    }
+
+    .back-to-top.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+    }
+
+    @media (max-width: 1100px){
+      .grid-3{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width: 860px){
+      .menu-btn{
+        display:grid;
+        place-items:center;
+      }
+
+      .nav-links{
+        position:absolute;
+        top:82px;
+        left:20px;
+        right:20px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:16px;
+        padding:24px;
+        border-radius:24px;
+        background:rgba(10,16,27,0.95);
+        border:1px solid rgba(255,255,255,0.08);
+        box-shadow:var(--shadow);
+        opacity:0;
+        pointer-events:none;
+        transform:translateY(-10px);
+        transition:0.28s ease;
+      }
+
+      .nav-links.open{
+        opacity:1;
+        pointer-events:auto;
+        transform:translateY(0);
+      }
+
+      .grid-3,
+      .form-grid,
+      .wetter-grid{
+        grid-template-columns:1fr;
+      }
+
+      .section{
+        padding:82px 0;
+      }
+    }
+
+    @media (max-width: 560px){
+      .container,
+      .nav-inner,
+      .hero-grid,
+      .footer-inner{
+        width:min(var(--max), calc(100% - 26px));
+      }
+
+      .hero-grid{
+        padding-top:110px;
+      }
+
+      .btn{
+        width:100%;
+      }
+
+      .hero-buttons{
+        flex-direction:column;
+      }
+
+      .card-content,
+      .form-card{
+        padding:22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-mountain-sun"></i></span>
+        <span>GipfelWelt</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Startseite</a>
+        <a href="touren.html" class="active">Touren</a>
+        <a href="ausruestung.html">Ausrüstung</a>
+        <a href="index.html#galerie">Galerie</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <div class="hero-bg"></div>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Tourenplaner</div>
+        <h1>Finde deine passende Bergtour.</h1>
+        <p>
+          Diese Unterseite verbindet modernes Design mit client-side JavaScript.
+          Touren werden aus einem Array geladen, gefiltert und dynamisch im DOM angezeigt.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#tourensuche" class="btn btn-primary">
+            <i class="fa-solid fa-compass"></i> Touren ansehen
+          </a>
+          <a href="#wetter" class="btn btn-secondary">
+            <i class="fa-solid fa-cloud-sun"></i> Wetter prüfen
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="tourensuche">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Interaktive Tourensuche</div>
+            <h2>Passende Touren finden</h2>
+          </div>
+          <p>
+            Filtere nach Land, Schwierigkeit, Saison oder Suchbegriff.
+            Die Ergebnisse werden dynamisch mit JavaScript erzeugt.
+          </p>
+        </div>
+
+        <div class="form-card">
+          <div class="form-grid">
+            <div>
+              <label class="label" for="landFilter">Land</label>
+              <select id="landFilter">
+                <option value="alle">Alle</option>
+                <option value="Österreich">Österreich</option>
+                <option value="Schweiz">Schweiz</option>
+                <option value="Italien">Italien</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="label" for="schwierigkeitFilter">Schwierigkeit</label>
+              <select id="schwierigkeitFilter">
+                <option value="alle">Alle</option>
+                <option value="Leicht">Leicht</option>
+                <option value="Mittel">Mittel</option>
+                <option value="Schwer">Schwer</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label class="label" for="saisonFilter">Saison</label>
+              <select id="saisonFilter">
+                <option value="alle">Alle</option>
+                <option value="Frühling">Frühling</option>
+                <option value="Sommer">Sommer</option>
+                <option value="Herbst">Herbst</option>
+                <option value="Winter">Winter</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="label" for="sucheInput">Suche</label>
+              <input type="text" id="sucheInput" placeholder="z. B. Innsbruck oder Dolomiten" />
+            </div>
+          </div>
+
+          <p class="result-info" id="resultInfo">6 Touren verfügbar</p>
+        </div>
+
+        <div id="tourenListe" class="grid-3 top-space"></div>
+      </div>
+    </section>
+
+    <section class="section" id="wetter">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Wetterdaten</div>
+            <h2>Aktuelles Wetter für Bergregionen</h2>
+          </div>
+          <p>
+            Wähle eine Region aus und lade aktuelle Wetterdaten mit der Fetch API.
+          </p>
+        </div>
+
+        <div class="form-card">
+          <div class="form-grid">
+            <div>
+              <label class="label" for="ortWahl">Region</label>
+              <select id="ortWahl">
+                <option value="47.2682,11.3923,Innsbruck">Innsbruck</option>
+                <option value="46.0207,7.7491,Zermatt">Zermatt</option>
+                <option value="46.5405,12.1357,Cortina d'Ampezzo">Cortina d'Ampezzo</option>
+              </select>
+            </div>
+
+            <div style="display:flex; align-items:end;">
+              <button class="btn btn-primary" id="wetterBtn" type="button">
+                <i class="fa-solid fa-cloud-sun"></i> Wetter laden
+              </button>
+            </div>
+          </div>
+
+          <div id="wetterAusgabe" class="wetter-box top-space">
+            Bitte wähle eine Region aus und lade die Wetterdaten.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-text">
+        <div class="logo">
+          <span class="logo-icon"><i class="fa-solid fa-mountain-sun"></i></span>
+          <span>GipfelWelt</span>
+        </div>
+        <p>© <span id="year"></span> GipfelWelt – Interaktive Tourenübersicht.</p>
+      </div>
+
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Nach oben">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    const backToTop = document.getElementById("backToTop");
+    const year = document.getElementById("year");
+    const resultInfo = document.getElementById("resultInfo");
+
+    const tourenDaten = [
+      {
+        name: "Nordketten-Panoramaweg",
+        land: "Österreich",
+        schwierigkeit: "Mittel",
+        saison: "Sommer",
+        dauer: "4 Stunden",
+        ort: "Innsbruck",
+        beschreibung: "Aussichtsreiche Bergtour mit beeindruckendem Blick auf Innsbruck und die Alpen."
+      },
+      {
+        name: "Zermatt Höhenweg",
+        land: "Schweiz",
+        schwierigkeit: "Schwer",
+        saison: "Herbst",
+        dauer: "6 Stunden",
+        ort: "Zermatt",
+        beschreibung: "Anspruchsvolle Route mit grandiosen Gipfelblicken und alpiner Landschaft."
+      },
+      {
+        name: "Dolomiten Rundweg",
+        land: "Italien",
+        schwierigkeit: "Mittel",
+        saison: "Sommer",
+        dauer: "5 Stunden",
+        ort: "Cortina d'Ampezzo",
+        beschreibung: "Spektakuläre Felsformationen, klare Luft und wunderschöne Panoramapunkte."
+      },
+      {
+        name: "Almweg Tirol",
+        land: "Österreich",
+        schwierigkeit: "Leicht",
+        saison: "Frühling",
+        dauer: "3 Stunden",
+        ort: "Innsbruck",
+        beschreibung: "Gemütliche Wanderung für Einsteiger mit Almen, Wiesen und entspannter Strecke."
+      },
+      {
+        name: "Schneepfad Engadin",
+        land: "Schweiz",
+        schwierigkeit: "Mittel",
+        saison: "Winter",
+        dauer: "4,5 Stunden",
+        ort: "St. Moritz",
+        beschreibung: "Winterliche Tour mit ruhigen Schneelandschaften und frischer Bergluft."
+      },
+      {
+        name: "Cinque-Torri-Steig",
+        land: "Italien",
+        schwierigkeit: "Schwer",
+        saison: "Herbst",
+        dauer: "5,5 Stunden",
+        ort: "Cortina d'Ampezzo",
+        beschreibung: "Abwechslungsreiche Route mit alpinem Charakter und eindrucksvollen Felskulissen."
+      }
+    ];
+
+    year.textContent = new Date().getFullYear();
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+
+      if (window.scrollY > 500) {
+        backToTop.classList.add("show");
+      } else {
+        backToTop.classList.remove("show");
+      }
+    });
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+      menuBtn.innerHTML = navLinks.classList.contains("open")
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      });
+    });
+
+    backToTop.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+
+    function renderTouren(liste) {
+      const tourenListe = document.getElementById("tourenListe");
+      tourenListe.innerHTML = "";
+
+      if (liste.length === 0) {
+        const leerBox = document.createElement("div");
+        leerBox.className = "leer-box";
+        leerBox.innerHTML = `
+          <h3>Keine Touren gefunden</h3>
+          <p>Bitte ändere deine Filter oder probiere einen anderen Suchbegriff.</p>
+        `;
+        tourenListe.appendChild(leerBox);
+        resultInfo.textContent = "0 Touren gefunden";
+        return;
+      }
+
+      liste.forEach((tour) => {
+        const artikel = document.createElement("article");
+        artikel.className = "card";
+
+        artikel.innerHTML = `
+          <div class="card-content">
+            <div class="card-icon"><i class="fa-solid fa-mountain"></i></div>
+            <h3>${tour.name}</h3>
+            <p>${tour.beschreibung}</p>
+            <div class="pill-list">
+              <span class="pill">${tour.land}</span>
+              <span class="pill">${tour.schwierigkeit}</span>
+              <span class="pill">${tour.saison}</span>
+              <span class="pill">${tour.dauer}</span>
+              <span class="pill">${tour.ort}</span>
+            </div>
+          </div>
+        `;
+
+        tourenListe.appendChild(artikel);
+      });
+
+      resultInfo.textContent = `${liste.length} Tour${liste.length === 1 ? "" : "en"} gefunden`;
+    }
+
+    function tourenFiltern() {
+      const land = document.getElementById("landFilter").value;
+      const schwierigkeit = document.getElementById("schwierigkeitFilter").value;
+      const saison = document.getElementById("saisonFilter").value;
+      const suche = document.getElementById("sucheInput").value.toLowerCase().trim();
+
+      const gefilterteTouren = tourenDaten.filter((tour) => {
+        const passtLand = land === "alle" || tour.land === land;
+        const passtSchwierigkeit = schwierigkeit === "alle" || tour.schwierigkeit === schwierigkeit;
+        const passtSaison = saison === "alle" || tour.saison === saison;
+        const passtSuche =
+          tour.name.toLowerCase().includes(suche) ||
+          tour.ort.toLowerCase().includes(suche) ||
+          tour.beschreibung.toLowerCase().includes(suche);
+
+        return passtLand && passtSchwierigkeit && passtSaison && passtSuche;
+      });
+
+      renderTouren(gefilterteTouren);
+    }
+
+    function wetterCodeText(code) {
+      const codes = {
+        0: "Klarer Himmel",
+        1: "Überwiegend klar",
+        2: "Teilweise bewölkt",
+        3: "Bedeckt",
+        45: "Neblig",
+        48: "Raureifnebel",
+        51: "Leichter Nieselregen",
+        53: "Mäßiger Nieselregen",
+        55: "Starker Nieselregen",
+        61: "Leichter Regen",
+        63: "Mäßiger Regen",
+        65: "Starker Regen",
+        71: "Leichter Schneefall",
+        73: "Mäßiger Schneefall",
+        75: "Starker Schneefall",
+        80: "Regenschauer",
+        95: "Gewitter"
+      };
+
+      return codes[code] || "Unbekannter Wetterzustand";
+    }
+
+    async function wetterLaden() {
+      const ortWahl = document.getElementById("ortWahl");
+      const wetterAusgabe = document.getElementById("wetterAusgabe");
+
+      if (!ortWahl || !wetterAusgabe) return;
+
+      const [latitude, longitude, ortName] = ortWahl.value.split(",");
+
+      wetterAusgabe.innerHTML = "Wetterdaten werden geladen...";
+
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,wind_speed_10m,weather_code&timezone=auto`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Fehler beim Laden der Wetterdaten.");
+        }
+
+        const daten = await response.json();
+        const aktuell = daten.current;
+
+        wetterAusgabe.innerHTML = `
+          <h3>Aktuelles Wetter in ${ortName}</h3>
+          <div class="wetter-grid">
+            <div class="wetter-item">
+              <span>Temperatur</span>
+              <strong>${aktuell.temperature_2m} °C</strong>
+            </div>
+            <div class="wetter-item">
+              <span>Wind</span>
+              <strong>${aktuell.wind_speed_10m} km/h</strong>
+            </div>
+            <div class="wetter-item">
+              <span>Wetterlage</span>
+              <strong>${wetterCodeText(aktuell.weather_code)}</strong>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        wetterAusgabe.innerHTML = `
+          <div class="leer-box">
+            <h3>Wetterdaten konnten nicht geladen werden</h3>
+            <p>Bitte versuche es später erneut.</p>
+          </div>
+        `;
+      }
+    }
+
+    function tourenFilterInitialisieren() {
+      const landFilter = document.getElementById("landFilter");
+      const schwierigkeitFilter = document.getElementById("schwierigkeitFilter");
+      const saisonFilter = document.getElementById("saisonFilter");
+      const sucheInput = document.getElementById("sucheInput");
+      const wetterBtn = document.getElementById("wetterBtn");
+
+      landFilter.addEventListener("change", tourenFiltern);
+      schwierigkeitFilter.addEventListener("change", tourenFiltern);
+      saisonFilter.addEventListener("change", tourenFiltern);
+      sucheInput.addEventListener("input", tourenFiltern);
+
+      if (wetterBtn) {
+        wetterBtn.addEventListener("click", wetterLaden);
+      }
+
+      renderTouren(tourenDaten);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      tourenFilterInitialisieren();
+      console.log("GipfelWelt Touren-Seite wurde erfolgreich geladen.");
+    });
+  </script>
+</body>
+</html>
