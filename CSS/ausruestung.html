@@ -15,737 +15,9 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
   />
-
-  <style>
-    :root{
-      --bg:#0b1220;
-      --bg-soft:#111a2b;
-      --card:#121c30;
-      --card-2:#18243c;
-      --text:#eef4ff;
-      --muted:#b8c4d9;
-      --gold:#d9b75d;
-      --gold-strong:#f0ca68;
-      --line:rgba(255,255,255,0.08);
-      --shadow:0 20px 50px rgba(0,0,0,0.35);
-      --radius:22px;
-      --max:1240px;
-      --success:#69c48a;
-      --danger:#ff7d7d;
-    }
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
-
-    body{
-      font-family:'Outfit',sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(217,183,93,0.12), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(83,114,164,0.18), transparent 30%),
-        linear-gradient(180deg, #08101b 0%, #0b1220 40%, #0d1524 100%);
-      color:var(--text);
-      line-height:1.7;
-      overflow-x:hidden;
-    }
-
-    img{
-      display:block;
-      width:100%;
-    }
-
-    a{
-      color:inherit;
-      text-decoration:none;
-    }
-
-    ul{
-      list-style:none;
-    }
-
-    .container{
-      width:min(var(--max), calc(100% - 40px));
-      margin-inline:auto;
-    }
-
-    .section{
-      padding:100px 0;
-      position:relative;
-    }
-
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      align-items:end;
-      margin-bottom:36px;
-      flex-wrap:wrap;
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      color:var(--gold);
-      font-weight:700;
-      letter-spacing:0.08em;
-      text-transform:uppercase;
-      font-size:0.82rem;
-      margin-bottom:14px;
-    }
-
-    .eyebrow::before{
-      content:"";
-      width:38px;
-      height:1px;
-      background:var(--gold);
-      display:block;
-    }
-
-    .section h2{
-      font-size:clamp(2rem, 4vw, 3.2rem);
-      line-height:1.1;
-      margin-bottom:12px;
-    }
-
-    .section-head p{
-      max-width:760px;
-      color:var(--muted);
-      font-size:1.02rem;
-    }
-
-    .pill-list{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top:18px;
-    }
-
-    .pill{
-      padding:10px 16px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.05);
-      border-radius:999px;
-      color:#f7f8fb;
-      font-size:0.95rem;
-      backdrop-filter:blur(10px);
-    }
-
-    nav{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      z-index:1200;
-      transition:0.35s ease;
-      border-bottom:1px solid transparent;
-    }
-
-    nav.scrolled{
-      background:rgba(7,12,22,0.82);
-      backdrop-filter:blur(16px);
-      border-color:rgba(255,255,255,0.08);
-      box-shadow:0 10px 30px rgba(0,0,0,0.22);
-    }
-
-    .nav-inner{
-      width:min(var(--max), calc(100% - 40px));
-      margin-inline:auto;
-      min-height:82px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
-
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:800;
-      font-size:1.2rem;
-      letter-spacing:0.02em;
-    }
-
-    .logo-icon{
-      width:42px;
-      height:42px;
-      border-radius:12px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg, var(--gold), #8f6a18);
-      color:#101316;
-      box-shadow:var(--shadow);
-      font-size:1rem;
-    }
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:22px;
-    }
-
-    .nav-links a{
-      color:#edf2fb;
-      font-weight:500;
-      position:relative;
-      transition:0.25s ease;
-    }
-
-    .nav-links a::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-6px;
-      width:0;
-      height:2px;
-      background:var(--gold);
-      transition:0.25s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active{
-      color:var(--gold-strong);
-    }
-
-    .nav-links a:hover::after,
-    .nav-links a.active::after{
-      width:100%;
-    }
-
-    .nav-actions{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-
-    .menu-btn{
-      display:none;
-      width:46px;
-      height:46px;
-      border:none;
-      border-radius:12px;
-      background:rgba(255,255,255,0.08);
-      color:white;
-      font-size:1.05rem;
-      cursor:pointer;
-    }
-
-    header{
-      min-height:72vh;
-      position:relative;
-      display:flex;
-      align-items:center;
-      isolation:isolate;
-      overflow:hidden;
-    }
-
-    header::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(90deg, rgba(6,10,18,0.82) 0%, rgba(6,10,18,0.55) 45%, rgba(6,10,18,0.30) 100%),
-        linear-gradient(180deg, rgba(6,10,18,0.10), rgba(6,10,18,0.60));
-      z-index:-1;
-    }
-
-    .hero-bg{
-      position:absolute;
-      inset:0;
-      z-index:-2;
-      background:url('https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;
-      transform:scale(1.05);
-    }
-
-    .hero-grid{
-      width:min(var(--max), calc(100% - 40px));
-      margin-inline:auto;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:40px;
-      align-items:center;
-      padding:130px 0 70px;
-    }
-
-    .hero-copy{
-      max-width:780px;
-    }
-
-    .hero-copy h1{
-      font-size:clamp(2.8rem, 7vw, 5rem);
-      line-height:0.98;
-      margin-bottom:22px;
-      letter-spacing:-0.03em;
-    }
-
-    .hero-copy p{
-      font-size:1.12rem;
-      color:#e6edf8;
-      max-width:720px;
-    }
-
-    .hero-buttons{
-      display:flex;
-      gap:16px;
-      flex-wrap:wrap;
-      margin-top:34px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:15px 24px;
-      border-radius:14px;
-      font-weight:700;
-      transition:0.28s ease;
-      border:1px solid transparent;
-      cursor:pointer;
-      font:inherit;
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--gold), var(--gold-strong));
-      color:#11161f;
-      box-shadow:0 12px 30px rgba(217,183,93,0.25);
-    }
-
-    .btn-primary:hover{
-      transform:translateY(-3px);
-      box-shadow:0 16px 34px rgba(217,183,93,0.34);
-    }
-
-    .btn-secondary{
-      border-color:rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.05);
-      color:white;
-      backdrop-filter:blur(12px);
-    }
-
-    .btn-secondary:hover{
-      transform:translateY(-3px);
-      border-color:rgba(217,183,93,0.45);
-      color:var(--gold-strong);
-    }
-
-    .btn-danger{
-      background:rgba(255,125,125,0.12);
-      color:#ffd1d1;
-      border:1px solid rgba(255,125,125,0.24);
-      padding:12px 16px;
-    }
-
-    .btn-danger:hover{
-      background:rgba(255,125,125,0.18);
-    }
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:24px;
-    }
-
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.03));
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:var(--radius);
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      transition:0.3s ease;
-    }
-
-    .card:hover{
-      transform:translateY(-8px);
-      border-color:rgba(217,183,93,0.32);
-    }
-
-    .card-content{
-      padding:24px;
-    }
-
-    .card h3{
-      font-size:1.3rem;
-      margin-bottom:10px;
-    }
-
-    .card p{
-      color:var(--muted);
-      font-size:0.98rem;
-    }
-
-    .card-icon{
-      width:54px;
-      height:54px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      margin-bottom:18px;
-      background:linear-gradient(135deg, rgba(217,183,93,0.18), rgba(217,183,93,0.08));
-      color:var(--gold-strong);
-      border:1px solid rgba(217,183,93,0.25);
-      font-size:1.2rem;
-    }
-
-    .form-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:28px;
-      padding:30px;
-      box-shadow:var(--shadow);
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:2fr 1fr;
-      gap:16px;
-      margin-bottom:18px;
-    }
-
-    .label{
-      display:block;
-      margin-bottom:8px;
-      font-weight:600;
-    }
-
-    input,
-    textarea,
-    select{
-      width:100%;
-      background:#0d1524;
-      color:white;
-      border:1px solid rgba(255,255,255,0.10);
-      border-radius:16px;
-      padding:15px 16px;
-      font:inherit;
-      outline:none;
-      transition:0.25s ease;
-    }
-
-    input:focus,
-    textarea:focus,
-    select:focus{
-      border-color:rgba(217,183,93,0.55);
-      box-shadow:0 0 0 4px rgba(217,183,93,0.10);
-    }
-
-    .top-space{
-      margin-top:32px;
-    }
-
-    .info-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:24px;
-    }
-
-    .packliste-box{
-      display:grid;
-      gap:18px;
-      margin-top:28px;
-    }
-
-    .pack-item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      padding:18px 20px;
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,0.08);
-      background:rgba(255,255,255,0.04);
-      transition:0.25s ease;
-    }
-
-    .pack-item:hover{
-      border-color:rgba(217,183,93,0.25);
-      transform:translateY(-2px);
-    }
-
-    .pack-item-links{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      flex:1;
-      min-width:0;
-    }
-
-    .pack-status{
-      width:22px;
-      height:22px;
-      border-radius:50%;
-      border:2px solid rgba(255,255,255,0.25);
-      display:inline-grid;
-      place-items:center;
-      flex-shrink:0;
-      cursor:pointer;
-      transition:0.25s ease;
-      background:transparent;
-    }
-
-    .pack-status i{
-      font-size:0.78rem;
-      opacity:0;
-      transition:0.2s ease;
-    }
-
-    .pack-item.erledigt{
-      border-color:rgba(105,196,138,0.35);
-      background:rgba(105,196,138,0.08);
-    }
-
-    .pack-item.erledigt .pack-status{
-      border-color:rgba(105,196,138,0.65);
-      background:rgba(105,196,138,0.18);
-      color:var(--success);
-    }
-
-    .pack-item.erledigt .pack-status i{
-      opacity:1;
-    }
-
-    .pack-text{
-      flex:1;
-      min-width:0;
-    }
-
-    .pack-text h3{
-      font-size:1.08rem;
-      margin-bottom:4px;
-    }
-
-    .pack-text p{
-      color:var(--muted);
-      font-size:0.95rem;
-    }
-
-    .pack-item.erledigt .pack-text h3{
-      text-decoration:line-through;
-      color:#cde8d5;
-    }
-
-    .pack-item.erledigt .pack-text p{
-      color:#b7d7c0;
-    }
-
-    .pack-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .mini-btn{
-      border:none;
-      border-radius:14px;
-      padding:11px 14px;
-      cursor:pointer;
-      font:inherit;
-      transition:0.25s ease;
-    }
-
-    .mini-btn.toggle-btn{
-      background:rgba(255,255,255,0.06);
-      color:white;
-      border:1px solid rgba(255,255,255,0.10);
-    }
-
-    .mini-btn.toggle-btn:hover{
-      border-color:rgba(217,183,93,0.35);
-      color:var(--gold-strong);
-    }
-
-    .mini-btn.delete-btn{
-      background:rgba(255,125,125,0.10);
-      color:#ffd1d1;
-      border:1px solid rgba(255,125,125,0.22);
-    }
-
-    .mini-btn.delete-btn:hover{
-      background:rgba(255,125,125,0.18);
-    }
-
-    .leer-box{
-      padding:22px;
-      border-radius:20px;
-      background:rgba(255,255,255,0.04);
-      border:1px dashed rgba(255,255,255,0.15);
-      color:var(--muted);
-    }
-
-    .status-zeile{
-      margin-top:14px;
-      color:var(--muted);
-      font-size:0.96rem;
-    }
-
-    footer{
-      padding:34px 0;
-      border-top:1px solid rgba(255,255,255,0.08);
-      background:rgba(5,9,16,0.65);
-      backdrop-filter:blur(12px);
-    }
-
-    .footer-inner{
-      width:min(var(--max), calc(100% - 40px));
-      margin-inline:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-
-    .footer-text p{
-      color:var(--muted);
-      margin-top:6px;
-    }
-
-    .footer-social{
-      display:flex;
-      gap:10px;
-    }
-
-    .footer-social a{
-      width:38px;
-      height:38px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:rgba(255,255,255,0.07);
-      border:1px solid rgba(255,255,255,0.08);
-      transition:0.25s ease;
-    }
-
-    .footer-social a:hover{
-      transform:translateY(-3px);
-      background:rgba(217,183,93,0.16);
-      color:var(--gold-strong);
-      border-color:rgba(217,183,93,0.35);
-    }
-
-    .back-to-top{
-      position:fixed;
-      right:20px;
-      bottom:20px;
-      width:52px;
-      height:52px;
-      border:none;
-      border-radius:18px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(135deg, var(--gold), var(--gold-strong));
-      color:#11161f;
-      font-size:1.05rem;
-      box-shadow:var(--shadow);
-      cursor:pointer;
-      opacity:0;
-      visibility:hidden;
-      transform:translateY(10px);
-      transition:0.28s ease;
-      z-index:1300;
-    }
-
-    .back-to-top.show{
-      opacity:1;
-      visibility:visible;
-      transform:translateY(0);
-    }
-
-    @media (max-width: 1100px){
-      .grid-3,
-      .info-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media (max-width: 860px){
-      .menu-btn{
-        display:grid;
-        place-items:center;
-      }
-
-      .nav-links{
-        position:absolute;
-        top:82px;
-        left:20px;
-        right:20px;
-        flex-direction:column;
-        align-items:flex-start;
-        gap:16px;
-        padding:24px;
-        border-radius:24px;
-        background:rgba(10,16,27,0.95);
-        border:1px solid rgba(255,255,255,0.08);
-        box-shadow:var(--shadow);
-        opacity:0;
-        pointer-events:none;
-        transform:translateY(-10px);
-        transition:0.28s ease;
-      }
-
-      .nav-links.open{
-        opacity:1;
-        pointer-events:auto;
-        transform:translateY(0);
-      }
-
-      .grid-3,
-      .form-grid,
-      .info-grid{
-        grid-template-columns:1fr;
-      }
-
-      .pack-item{
-        flex-direction:column;
-        align-items:stretch;
-      }
-
-      .pack-actions{
-        justify-content:flex-start;
-      }
-
-      .section{
-        padding:82px 0;
-      }
-    }
-
-    @media (max-width: 560px){
-      .container,
-      .nav-inner,
-      .hero-grid,
-      .footer-inner{
-        width:min(var(--max), calc(100% - 26px));
-      }
-
-      .hero-grid{
-        padding-top:110px;
-      }
-
-      .btn{
-        width:100%;
-      }
-
-      .hero-buttons{
-        flex-direction:column;
-      }
-
-      .card-content,
-      .form-card{
-        padding:22px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="logo">
@@ -762,23 +34,22 @@
       </div>
 
       <div class="nav-actions">
-        <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen">
+        <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <header>
-    <div class="hero-bg"></div>
-
-    <div class="hero-grid">
+  <header class="hero hero-gear">
+    <div class="hero-overlay"></div>
+    <div class="hero-grid hero-grid-single">
       <div class="hero-copy">
         <div class="eyebrow">Packliste & Planung</div>
         <h1>Die richtige Ausrüstung für jede Bergtour.</h1>
         <p>
-          Diese Unterseite zeigt eine interaktive Packliste mit client-side JavaScript.
-          Einträge werden aus einem Array geladen, im DOM erzeugt, markiert, hinzugefügt und gelöscht.
+          Von Schuhen über Wetterschutz bis zur interaktiven Packliste:
+          diese Seite hilft dir, deine Ausrüstung sicher und übersichtlich zu planen.
         </p>
 
         <div class="hero-buttons">
@@ -802,8 +73,8 @@
             <h2>Was bei einer Bergtour nicht fehlen darf</h2>
           </div>
           <p>
-            Gute Vorbereitung ist entscheidend. Die richtige Ausrüstung erhöht die Sicherheit,
-            den Komfort und die Orientierung in alpinem Gelände.
+            Gute Vorbereitung ist entscheidend. Die richtige Ausrüstung erhöht
+            Sicherheit, Komfort und Orientierung in alpinem Gelände.
           </p>
         </div>
 
@@ -812,9 +83,7 @@
             <div class="card-content">
               <div class="card-icon"><i class="fa-solid fa-shoe-prints"></i></div>
               <h3>Passende Schuhe</h3>
-              <p>
-                Feste Wanderschuhe mit gutem Profil geben Halt auf steinigen und rutschigen Wegen.
-              </p>
+              <p>Feste Wanderschuhe mit gutem Profil geben Halt auf steinigen und rutschigen Wegen.</p>
             </div>
           </article>
 
@@ -822,9 +91,7 @@
             <div class="card-content">
               <div class="card-icon"><i class="fa-solid fa-sun"></i></div>
               <h3>Wetter beachten</h3>
-              <p>
-                Auch im Sommer kann das Wetter in den Bergen schnell umschlagen. Eine Jacke gehört immer dazu.
-              </p>
+              <p>Auch im Sommer kann das Wetter in den Bergen schnell umschlagen. Eine Jacke gehört immer dazu.</p>
             </div>
           </article>
 
@@ -832,9 +99,7 @@
             <div class="card-content">
               <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
               <h3>Orientierung</h3>
-              <p>
-                Karten, markierte Wege und ein geladenes Handy helfen bei der sicheren Navigation.
-              </p>
+              <p>Karten, markierte Wege und ein geladenes Handy helfen bei der sicheren Navigation.</p>
             </div>
           </article>
         </div>
@@ -850,7 +115,6 @@
           </div>
           <p>
             Füge neue Gegenstände hinzu, markiere erledigte Einträge oder lösche unnötige Elemente.
-            Die Liste wird komplett dynamisch mit JavaScript gerendert.
           </p>
         </div>
 
@@ -867,7 +131,7 @@
                 />
               </div>
 
-              <div style="display:flex; align-items:end;">
+              <div class="form-submit-wrap">
                 <button type="submit" class="btn btn-primary">
                   <i class="fa-solid fa-plus"></i> Hinzufügen
                 </button>
@@ -875,9 +139,7 @@
             </div>
           </form>
 
-          <p class="status-zeile" id="statusText">
-            0 Gegenstände in der Packliste
-          </p>
+          <p class="status-zeile" id="statusText">0 Gegenstände in der Packliste</p>
 
           <div id="packlisteBox" class="packliste-box top-space"></div>
         </div>
@@ -896,10 +158,10 @@
       </div>
 
       <div class="footer-social">
-        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-        <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </footer>
@@ -908,196 +170,6 @@
     <i class="fa-solid fa-arrow-up"></i>
   </button>
 
-  <script>
-    const navbar = document.getElementById("navbar");
-    const menuBtn = document.getElementById("menuBtn");
-    const navLinks = document.getElementById("navLinks");
-    const backToTop = document.getElementById("backToTop");
-    const year = document.getElementById("year");
-
-    const zustand = {
-      packliste: [
-        { id: 1, name: "Wanderschuhe", beschreibung: "Stabiler Halt für alpine Wege", erledigt: false },
-        { id: 2, name: "Wasserflasche", beschreibung: "Ausreichend Flüssigkeit für die Tour", erledigt: true },
-        { id: 3, name: "Regenjacke", beschreibung: "Wichtiger Schutz bei Wetterumschwung", erledigt: false },
-        { id: 4, name: "Sonnencreme", beschreibung: "Schutz vor intensiver UV-Strahlung", erledigt: false },
-        { id: 5, name: "Erste-Hilfe-Set", beschreibung: "Für kleine Notfälle unterwegs", erledigt: false }
-      ]
-    };
-
-    year.textContent = new Date().getFullYear();
-
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 40) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
-      }
-
-      if (window.scrollY > 500) {
-        backToTop.classList.add("show");
-      } else {
-        backToTop.classList.remove("show");
-      }
-    });
-
-    menuBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("open");
-      menuBtn.innerHTML = navLinks.classList.contains("open")
-        ? '<i class="fa-solid fa-xmark"></i>'
-        : '<i class="fa-solid fa-bars"></i>';
-    });
-
-    document.querySelectorAll(".nav-links a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-      });
-    });
-
-    backToTop.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-
-    function statusTextAktualisieren() {
-      const statusText = document.getElementById("statusText");
-      const gesamt = zustand.packliste.length;
-      const erledigt = zustand.packliste.filter((eintrag) => eintrag.erledigt).length;
-
-      statusText.textContent = `${gesamt} Gegenstände in der Packliste – ${erledigt} erledigt`;
-    }
-
-    function packlisteRendern() {
-      const packlisteBox = document.getElementById("packlisteBox");
-      packlisteBox.innerHTML = "";
-
-      if (zustand.packliste.length === 0) {
-        const leerBox = document.createElement("div");
-        leerBox.className = "leer-box";
-        leerBox.innerHTML = `
-          <h3>Die Packliste ist leer</h3>
-          <p>Füge einen neuen Gegenstand hinzu, um mit der Planung zu beginnen.</p>
-        `;
-        packlisteBox.appendChild(leerBox);
-        statusTextAktualisieren();
-        return;
-      }
-
-      zustand.packliste.forEach((eintrag) => {
-        const artikel = document.createElement("article");
-        artikel.className = `pack-item ${eintrag.erledigt ? "erledigt" : ""}`;
-
-        artikel.innerHTML = `
-          <div class="pack-item-links">
-            <button class="pack-status" type="button" aria-label="Status ändern" data-id="${eintrag.id}">
-              <i class="fa-solid fa-check"></i>
-            </button>
-
-            <div class="pack-text">
-              <h3>${eintrag.name}</h3>
-              <p>${eintrag.beschreibung}</p>
-            </div>
-          </div>
-
-          <div class="pack-actions">
-            <button class="mini-btn toggle-btn" type="button" data-toggle-id="${eintrag.id}">
-              ${eintrag.erledigt ? "Als offen markieren" : "Als eingepackt markieren"}
-            </button>
-            <button class="mini-btn delete-btn" type="button" data-delete-id="${eintrag.id}">
-              <i class="fa-solid fa-trash"></i> Löschen
-            </button>
-          </div>
-        `;
-
-        packlisteBox.appendChild(artikel);
-      });
-
-      statusTextAktualisieren();
-      packlisteEventsVerbinden();
-    }
-
-    function packlisteEventsVerbinden() {
-      document.querySelectorAll("[data-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const id = Number(button.dataset.id);
-          statusUmschalten(id);
-        });
-      });
-
-      document.querySelectorAll("[data-toggle-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const id = Number(button.dataset.toggleId);
-          statusUmschalten(id);
-        });
-      });
-
-      document.querySelectorAll("[data-delete-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const id = Number(button.dataset.deleteId);
-          eintragLoeschen(id);
-        });
-      });
-    }
-
-    function statusUmschalten(id) {
-      zustand.packliste = zustand.packliste.map((eintrag) => {
-        if (eintrag.id === id) {
-          return {
-            ...eintrag,
-            erledigt: !eintrag.erledigt
-          };
-        }
-        return eintrag;
-      });
-
-      packlisteRendern();
-    }
-
-    function eintragLoeschen(id) {
-      zustand.packliste = zustand.packliste.filter((eintrag) => eintrag.id !== id);
-      packlisteRendern();
-    }
-
-    function eintragHinzufuegen(name) {
-      const neuerEintrag = {
-        id: Date.now(),
-        name: name,
-        beschreibung: "Manuell zur Packliste hinzugefügt",
-        erledigt: false
-      };
-
-      zustand.packliste.unshift(neuerEintrag);
-      packlisteRendern();
-    }
-
-    function formularInitialisieren() {
-      const packForm = document.getElementById("packForm");
-      const gegenstandInput = document.getElementById("gegenstandInput");
-
-      packForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const wert = gegenstandInput.value.trim();
-
-        if (!wert) {
-          alert("Bitte gib einen Gegenstand ein.");
-          return;
-        }
-
-        eintragHinzufuegen(wert);
-        packForm.reset();
-        gegenstandInput.focus();
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      formularInitialisieren();
-      packlisteRendern();
-      console.log("GipfelWelt Ausrüstung-Seite wurde erfolgreich geladen.");
-    });
-  </script>
+  <script src="script.js" defer></script>
 </body>
 </html>

@@ -3,17 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GipfelWelt | Bergwandern, Natur & Abenteuer</title>
+  <title>GipfelWelt | Startseite</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
   <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
 </head>
-<body data-seite="start">
-
+<body>
   <nav id="navbar">
     <div class="nav-inner">
       <a href="index.html" class="logo">
@@ -22,7 +26,7 @@
       </a>
 
       <div class="nav-links" id="navLinks">
-        <a href="index.html">Startseite</a>
+        <a href="index.html" class="active">Startseite</a>
         <a href="touren.html">Touren</a>
         <a href="ausruestung.html">Ausrüstung</a>
         <a href="#galerie">Galerie</a>
@@ -30,91 +34,89 @@
       </div>
 
       <div class="nav-actions">
-        <div class="social-mini">
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <div class="social-mini desktop-social">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
         </div>
 
-        <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen">
+        <button class="menu-btn" id="menuBtn" aria-label="Menü öffnen" aria-expanded="false">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <header id="start">
-    <div class="hero-bg hero-bg-home"></div>
+  <header class="hero hero-home">
+    <div class="hero-overlay"></div>
 
     <div class="hero-grid">
       <div class="hero-copy">
-        <div class="eyebrow">Bergwandern in Europa</div>
-        <h1>Die Berge beginnen dort, wo der Alltag endet.</h1>
+        <div class="eyebrow">Alpenabenteuer neu erleben</div>
+        <h1>Abenteuer beginnen dort, wo der Alltag endet.</h1>
         <p>
           Willkommen bei GipfelWelt – deiner modernen Website rund um Bergwandern,
-          Naturerlebnisse, Sicherheit und unvergessliche Abenteuer.
-          Entdecke Inspiration, praktische Hinweise und interaktive Funktionen
-          für deine nächste Tour.
+          Naturerlebnisse, Sicherheit und unvergessliche Abenteuer. Entdecke Inspiration,
+          praktische Hinweise und interaktive Funktionen für deine nächste Tour.
         </p>
 
         <div class="pill-list">
-          <span class="pill">Sommerwanderungen</span>
-          <span class="pill">Wintertouren</span>
-          <span class="pill">Klettersteige</span>
-          <span class="pill">Alpenhütten</span>
-          <span class="pill">Sicherheit unterwegs</span>
+          <a class="pill pill-link" href="touren.html?saison=Sommer">Sommerwanderungen</a>
+          <a class="pill pill-link" href="touren.html?saison=Winter">Wintertouren</a>
+          <a class="pill pill-link" href="touren.html?schwierigkeit=Schwer">Klettersteige</a>
+          <a class="pill pill-link" href="touren.html?land=%C3%96sterreich">Alpenhütten</a>
+          <a class="pill pill-link" href="ausruestung.html#tipps">Sicherheit unterwegs</a>
         </div>
 
         <div class="hero-buttons">
           <a href="touren.html" class="btn btn-primary">
             <i class="fa-solid fa-compass"></i> Touren entdecken
           </a>
-          <a href="ausruestung.html" class="btn btn-secondary">
+          <a href="ausruestung.html#packliste" class="btn btn-secondary">
             <i class="fa-solid fa-suitcase-rolling"></i> Packliste öffnen
           </a>
         </div>
       </div>
 
-      <div class="hero-panel">
-        <div class="hero-image">
-          <img
-            src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1400&auto=format&fit=crop"
-            alt="Bergpanorama bei Sonnenaufgang"
-          />
-        </div>
+      <div class="hero-side">
+        <img
+          class="hero-side-image"
+          src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1400&auto=format&fit=crop"
+          alt="Panoramablick auf Berglandschaft"
+        />
 
         <div class="hero-info">
-          <div class="info-box">
+          <a class="info-box info-link" href="touren.html?saison=Sommer">
             <span>Erleben</span>
             <strong>Wandern mit Aussicht</strong>
             <p>Von sanften Almwegen bis zu eindrucksvollen Höhenpfaden.</p>
-          </div>
+          </a>
 
-          <div class="info-box">
+          <a class="info-box info-link" href="ausruestung.html#packliste">
             <span>Planen</span>
             <strong>Gut vorbereitet starten</strong>
             <p>Mit Wettercheck, Ausrüstung und passenden Etappenzielen.</p>
-          </div>
+          </a>
 
-          <div class="info-box">
+          <a class="info-box info-link" href="touren.html?land=Italien">
             <span>Entdecken</span>
             <strong>Beliebte Bergregionen</strong>
             <p>Österreich, Schweiz und die Dolomiten im Überblick.</p>
-          </div>
+          </a>
 
-          <div class="info-box">
+          <a class="info-box info-link" href="touren.html#wetter">
             <span>Technik</span>
-            <strong>WMC-Projekt mit JavaScript</strong>
+            <strong>Wetter für Bergregionen</strong>
             <p>Interaktive Filter, Wetterdaten und dynamische Inhalte.</p>
-          </div>
+          </a>
         </div>
       </div>
-    </div>
-
-    <div class="hero-floating">
-      <span class="floating-chip"><i class="fa-solid fa-sun"></i> Beste Zeit: Früh starten</span>
-      <span class="floating-chip"><i class="fa-solid fa-shield-heart"></i> Sicherheit zuerst</span>
-      <span class="floating-chip"><i class="fa-solid fa-cloud-sun"></i> Wetter vorab prüfen</span>
     </div>
   </header>
 
@@ -123,151 +125,37 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Projektfunktionen</div>
-            <h2>Interaktive Bereiche der Website</h2>
+            <div class="eyebrow">Warum GipfelWelt</div>
+            <h2>Alles für deine nächste Tour an einem Ort</h2>
           </div>
           <p>
-            Diese Website verbindet modernes Design mit client-side JavaScript.
-            Neben informativen Inhalten gibt es auch echte Interaktion für das Abschlussprojekt.
+            Ob spontane Wochenendwanderung oder anspruchsvolle Bergtour:
+            hier findest du Inspiration, Orientierung und praktische Hilfen.
           </p>
         </div>
 
         <div class="grid-3">
           <article class="card">
             <div class="card-content">
-              <div class="card-icon"><i class="fa-solid fa-map-location-dot"></i></div>
-              <h3>Tourensuche</h3>
-              <p>
-                Filtere Touren nach Land, Schwierigkeit, Saison und Suchbegriff.
-              </p>
-              <a class="btn btn-primary btn-small" href="touren.html">Zur Tourensuche</a>
+              <div class="card-icon"><i class="fa-solid fa-route"></i></div>
+              <h3>Passende Touren</h3>
+              <p>Filtere nach Land, Jahreszeit, Schwierigkeit und Ort für schnelle Ergebnisse.</p>
             </div>
           </article>
 
           <article class="card">
             <div class="card-content">
-              <div class="card-icon"><i class="fa-solid fa-cloud"></i></div>
-              <h3>Wetterdaten per Fetch</h3>
-              <p>
-                Lade aktuelle Wetterdaten für ausgewählte Bergregionen per API.
-              </p>
-              <a class="btn btn-primary btn-small" href="touren.html#wetterbereich">Wetter ansehen</a>
+              <div class="card-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+              <h3>Wetter direkt prüfen</h3>
+              <p>Vergleiche wichtige Bergregionen und plane deine Wanderung besser.</p>
             </div>
           </article>
 
           <article class="card">
             <div class="card-content">
-              <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
+              <div class="card-icon"><i class="fa-solid fa-backpack"></i></div>
               <h3>Interaktive Packliste</h3>
-              <p>
-                Füge Einträge hinzu, markiere sie als erledigt oder lösche sie wieder.
-              </p>
-              <a class="btn btn-primary btn-small" href="ausruestung.html">Packliste öffnen</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="aktivitaeten">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Aktivitäten</div>
-            <h2>Abenteuer für jede Jahreszeit</h2>
-          </div>
-          <p>
-            Berglandschaften bieten im Sommer, Herbst und Winter völlig unterschiedliche Erlebnisse.
-            Genau diese Vielfalt macht das Wandern in Europa so besonders.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=1200&auto=format&fit=crop" alt="Wanderung durch eine Berglandschaft" />
-              <span class="badge">Natur & Bewegung</span>
-            </div>
-            <div class="card-content">
-              <h3>Wandern</h3>
-              <p>
-                Entdecke abwechslungsreiche Routen durch Täler, Wälder, Almwiesen und aussichtsreiche Höhenwege.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=1200&auto=format&fit=crop" alt="Klettersteig in den Bergen" />
-              <span class="badge">Mut & Technik</span>
-            </div>
-            <div class="card-content">
-              <h3>Klettersteig</h3>
-              <p>
-                Wer Höhe, Fels und Adrenalin liebt, findet hier eine spannende sportliche Herausforderung.
-              </p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1548777123-e216912df7d8?q=80&w=1200&auto=format&fit=crop" alt="Wintertour im Schnee" />
-              <span class="badge">Schnee & Stille</span>
-            </div>
-            <div class="card-content">
-              <h3>Wintertouren</h3>
-              <p>
-                Verschneite Wege, klare Luft und ruhige Landschaften schaffen eine besondere Atmosphäre.
-              </p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="reiseziele">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Reiseziele</div>
-            <h2>Beliebte Bergregionen in Europa</h2>
-          </div>
-          <p>
-            Von Österreich bis Italien bieten die Alpen spektakuläre Landschaften, Hütten und Panoramapfade.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <article class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1564419320461-6870880221ad?q=80&w=1200&auto=format&fit=crop" alt="Österreichische Alpen" />
-              <span class="badge">Österreich</span>
-            </div>
-            <div class="card-content">
-              <h3>Österreichische Alpen</h3>
-              <p>Vielseitige Wanderwege, gemütliche Hütten und eindrucksvolle Täler.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1200&auto=format&fit=crop" alt="Schweizer Berglandschaft" />
-              <span class="badge">Schweiz</span>
-            </div>
-            <div class="card-content">
-              <h3>Schweizer Hochgebirge</h3>
-              <p>Majestätische Gipfel, klare Bergseen und spektakuläre Fernsicht.</p>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-image">
-              <img src="https://images.unsplash.com/photo-1531210483974-4f8205d03263?q=80&w=1200&auto=format&fit=crop" alt="Dolomiten in Italien" />
-              <span class="badge">Italien</span>
-            </div>
-            <div class="card-content">
-              <h3>Dolomiten</h3>
-              <p>Markante Felsformationen und eindrucksvolle Touren mit alpinem Charakter.</p>
+              <p>Füge Gegenstände hinzu, markiere sie als erledigt und behalte den Überblick.</p>
             </div>
           </article>
         </div>
@@ -278,39 +166,54 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Galerie</div>
-            <h2>Stimmungen aus den Bergen</h2>
+            <div class="eyebrow">Galerie & Inspiration</div>
+            <h2>Abenteuer für jede Jahreszeit</h2>
           </div>
           <p>
-            Bilder zeigen die besondere Atmosphäre zwischen Morgenlicht, Fels und weiter Aussicht.
+            Klicke auf ein Motiv und springe direkt zu den passenden Touren ili Ausrüstungstipps.
           </p>
         </div>
 
-        <div class="gallery-grid">
-          <div class="gallery-item span-2">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1400&auto=format&fit=crop" alt="Großes Bergpanorama" />
-            <div class="gallery-label">Alpines Morgenlicht</div>
-          </div>
+        <div class="gallery-grid gallery-grid-old">
+          <a class="gallery-item gallery-large" href="touren.html?saison=Sommer">
+            <img
+              src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1400&auto=format&fit=crop"
+              alt="Sommerwanderung in den Bergen"
+            />
+            <span class="gallery-label">Abenteuer für jede Jahreszeit</span>
+          </a>
 
-          <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Aussicht in den Bergen" />
-            <div class="gallery-label">Weite Blicke</div>
-          </div>
+          <a class="gallery-item" href="touren.html?saison=Winter">
+            <img
+              src="https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop"
+              alt="Wintertour in schneebedeckter Berglandschaft"
+            />
+            <span class="gallery-label">Wintertouren</span>
+          </a>
 
-          <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1458668383970-8ddd3927deed?q=80&w=1200&auto=format&fit=crop" alt="Sicherheitsausrüstung in der Natur" />
-            <div class="gallery-label">Vorbereitung zählt</div>
-          </div>
+          <a class="gallery-item" href="touren.html?schwierigkeit=Schwer">
+            <img
+              src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1200&auto=format&fit=crop"
+              alt="Klettersteig in alpinem Gelände"
+            />
+            <span class="gallery-label">Klettersteige</span>
+          </a>
 
-          <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1624600965506-45484f8339de?q=80&w=1200&auto=format&fit=crop" alt="Outdoor-Kleidung für Berge" />
-            <div class="gallery-label">Funktionale Kleidung</div>
-          </div>
+          <a class="gallery-item" href="touren.html?land=Italien">
+            <img
+              src="https://images.unsplash.com/photo-1533130061792-64b345e4a833?q=80&w=1200&auto=format&fit=crop"
+              alt="Dolomiten in Italien"
+            />
+            <span class="gallery-label">Dolomiten in Italien</span>
+          </a>
 
-          <div class="gallery-item">
-            <img src="https://images.unsplash.com/photo-1548777123-e216912df7d8?q=80&w=1200&auto=format&fit=crop" alt="Winterliche Berglandschaft" />
-            <div class="gallery-label">Winterstille</div>
-          </div>
+          <a class="gallery-item" href="ausruestung.html#tipps">
+            <img
+              src="https://images.unsplash.com/photo-1551582045-6ec9c11d8697?q=80&w=1200&auto=format&fit=crop"
+              alt="Outdoor-Kleidung za Bergtouren"
+            />
+            <span class="gallery-label">Outdoor-Kleider für Berge</span>
+          </a>
         </div>
       </div>
     </section>
@@ -320,101 +223,70 @@
         <div class="section-head">
           <div>
             <div class="eyebrow">Kontakt</div>
-            <h2>Schreib uns deine Frage oder Idee</h2>
+            <h2>Fragen zu Touren oder Planung?</h2>
           </div>
           <p>
-            Du möchtest mehr über Touren, Ausrüstung oder Wettervorbereitung erfahren?
-            Dann sende uns einfach eine Nachricht.
+            Schreibe uns direkt über das Formular. Die Eingaben werden geprüft
+            und als Beispiel client-side verarbeitet.
           </p>
         </div>
 
-        <div class="contact-wrap">
-          <div class="contact-card">
-            <h3>GipfelWelt Team</h3>
-            <p>
-              Diese Website verbindet informative Inhalte mit moderner Gestaltung und interaktiven Funktionen.
-            </p>
-
-            <div class="contact-list">
-              <div class="contact-item">
-                <i class="fa-regular fa-envelope"></i>
-                <div>
-                  <strong>E-Mail</strong>
-                  <span>info@gipfelwelt.at</span>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <i class="fa-solid fa-phone"></i>
-                <div>
-                  <strong>Telefon</strong>
-                  <span>+43 123 456 789</span>
-                </div>
-              </div>
-
-              <div class="contact-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <div>
-                  <strong>Adresse</strong>
-                  <span>Alpenstraße 10, 1010 Wien, Österreich</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="contact-note">
-              Für das WMC-Abschlussprojekt wurden Design, client-side JavaScript,
-              dynamische Elemente und API-Daten kombiniert.
-            </div>
-          </div>
-
+        <div class="kontakt-grid">
           <div class="form-card">
             <form id="kontaktFormular">
               <div class="form-grid">
                 <div>
                   <label class="label" for="name">Name</label>
-                  <input type="text" id="name" name="name" placeholder="Dein Name" required />
+                  <input type="text" id="name" placeholder="Dein Name" required />
                 </div>
-
                 <div>
                   <label class="label" for="email">E-Mail</label>
-                  <input type="email" id="email" name="email" placeholder="deinename@email.at" required />
+                  <input type="email" id="email" placeholder="name@email.com" required />
                 </div>
               </div>
 
-              <div class="form-grid">
-                <div>
-                  <label class="label" for="thema">Thema</label>
-                  <select id="thema" name="thema" required>
-                    <option value="">Bitte auswählen</option>
-                    <option value="wanderung">Wanderung</option>
-                    <option value="ausruestung">Ausrüstung</option>
-                    <option value="reiseziele">Reiseziele</option>
-                    <option value="sicherheit">Sicherheit</option>
-                    <option value="sonstiges">Sonstiges</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="label" for="saison">Lieblingssaison</label>
-                  <select id="saison" name="saison">
-                    <option value="">Bitte auswählen</option>
-                    <option value="fruehling">Frühling</option>
-                    <option value="sommer">Sommer</option>
-                    <option value="herbst">Herbst</option>
-                    <option value="winter">Winter</option>
-                  </select>
-                </div>
+              <div class="top-space">
+                <label class="label" for="thema">Thema</label>
+                <input type="text" id="thema" placeholder="z. B. Tourenempfehlung" required />
               </div>
 
-              <div>
+              <div class="top-space">
                 <label class="label" for="nachricht">Nachricht</label>
-                <textarea id="nachricht" name="nachricht" placeholder="Schreibe hier deine Nachricht..." required></textarea>
+                <textarea id="nachricht" rows="5" placeholder="Deine Nachricht..." required></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary">
-                <i class="fa-regular fa-paper-plane"></i> Nachricht senden
-              </button>
+              <div class="top-space">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa-solid fa-paper-plane"></i> Nachricht senden
+                </button>
+              </div>
             </form>
+          </div>
+
+          <div class="contact-stack">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+                <h3>Adresse</h3>
+                <p>Alpenstraße 10, 1010 Wien, Österreich</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content">
+                <div class="card-icon"><i class="fa-solid fa-phone"></i></div>
+                <h3>Telefon</h3>
+                <p>+43 1 234 56 78</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-content">
+                <div class="card-icon"><i class="fa-solid fa-envelope"></i></div>
+                <h3>E-Mail</h3>
+                <p>info@gipfelwelt.at</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -428,13 +300,14 @@
           <span class="logo-icon"><i class="fa-solid fa-mountain-sun"></i></span>
           <span>GipfelWelt</span>
         </div>
-        <p>© <span id="year"></span> GipfelWelt – Bergwandern, Natur und Abenteuer in Europa.</p>
+        <p>© <span id="year"></span> GipfelWelt – Bergtouren, Wetter und Ausrüstung.</p>
       </div>
 
       <div class="footer-social">
-        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </footer>
@@ -443,5 +316,6 @@
     <i class="fa-solid fa-arrow-up"></i>
   </button>
 
+  <script src="script.js" defer></script>
 </body>
 </html>

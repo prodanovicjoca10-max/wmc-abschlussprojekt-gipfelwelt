@@ -4,9 +4,11 @@ const navLinks = document.getElementById("navLinks");
 const backToTop = document.getElementById("backToTop");
 const kontaktFormular = document.getElementById("kontaktFormular");
 const year = document.getElementById("year");
+const resultInfo = document.getElementById("resultInfo");
 
 const tourenDaten = [
   {
+    id: 1,
     name: "Nordketten-Panoramaweg",
     land: "Österreich",
     schwierigkeit: "Mittel",
@@ -16,6 +18,7 @@ const tourenDaten = [
     beschreibung: "Aussichtsreiche Bergtour mit beeindruckendem Blick auf Innsbruck und die Alpen."
   },
   {
+    id: 2,
     name: "Zermatt Höhenweg",
     land: "Schweiz",
     schwierigkeit: "Schwer",
@@ -25,6 +28,7 @@ const tourenDaten = [
     beschreibung: "Anspruchsvolle Route mit grandiosen Gipfelblicken und alpiner Landschaft."
   },
   {
+    id: 3,
     name: "Dolomiten Rundweg",
     land: "Italien",
     schwierigkeit: "Mittel",
@@ -34,6 +38,7 @@ const tourenDaten = [
     beschreibung: "Spektakuläre Felsformationen, klare Luft und wunderschöne Panoramapunkte."
   },
   {
+    id: 4,
     name: "Almweg Tirol",
     land: "Österreich",
     schwierigkeit: "Leicht",
@@ -43,22 +48,41 @@ const tourenDaten = [
     beschreibung: "Gemütliche Wanderung für Einsteiger mit Almen, Wiesen und entspannter Strecke."
   },
   {
+    id: 5,
     name: "Schneepfad Engadin",
     land: "Schweiz",
     schwierigkeit: "Mittel",
     saison: "Winter",
     dauer: "4,5 Stunden",
-    ort: "Zermatt",
+    ort: "St. Moritz",
     beschreibung: "Winterliche Tour mit ruhigen Schneelandschaften und frischer Bergluft."
+  },
+  {
+    id: 6,
+    name: "Cinque-Torri-Steig",
+    land: "Italien",
+    schwierigkeit: "Schwer",
+    saison: "Herbst",
+    dauer: "5,5 Stunden",
+    ort: "Cortina d'Ampezzo",
+    beschreibung: "Abwechslungsreiche Route mit alpinem Charakter und eindrucksvollen Felskulissen."
   }
 ];
 
 let packlistenDaten = [
-  { name: "Wanderschuhe", erledigt: false },
-  { name: "Wasserflasche", erledigt: true },
-  { name: "Erste Hilfe", erledigt: false },
-  { name: "Regenjacke", erledigt: false }
+  { id: 1, name: "Wanderschuhe", beschreibung: "Stabiler Halt für alpine Wege", erledigt: false },
+  { id: 2, name: "Wasserflasche", beschreibung: "Ausreichend Flüssigkeit für die Tour", erledigt: true },
+  { id: 3, name: "Regenjacke", beschreibung: "Wichtiger Schutz bei Wetterumschwung", erledigt: false },
+  { id: 4, name: "Sonnencreme", beschreibung: "Schutz vor intensiver UV-Strahlung", erledigt: false },
+  { id: 5, name: "Erste-Hilfe-Set", beschreibung: "Für kleine Notfälle unterwegs", erledigt: false }
 ];
+
+const wetterFallback = {
+  "Innsbruck": { temperature_2m: "17", wind_speed_10m: "11", weather_code: 2 },
+  "Zermatt": { temperature_2m: "9", wind_speed_10m: "18", weather_code: 3 },
+  "Cortina d'Ampezzo": { temperature_2m: "14", wind_speed_10m: "13", weather_code: 1 },
+  "St. Moritz": { temperature_2m: "7", wind_speed_10m: "16", weather_code: 71 }
+};
 
 function jahrSetzen() {
   if (year) {
@@ -68,40 +92,36 @@ function jahrSetzen() {
 
 function navbarBeimScrollen() {
   if (navbar) {
-    if (window.scrollY > 40) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
-    }
+    navbar.classList.toggle("scrolled", window.scrollY > 40);
   }
 
   if (backToTop) {
-    if (window.scrollY > 500) {
-      backToTop.classList.add("show");
-    } else {
-      backToTop.classList.remove("show");
-    }
+    backToTop.classList.toggle("show", window.scrollY > 500);
   }
 }
 
 function menueUmschalten() {
-  if (!navLinks || !menuBtn) {
-    return;
-  }
+  if (!navLinks || !menuBtn) return;
 
-  navLinks.classList.toggle("open");
-  menuBtn.innerHTML = navLinks.classList.contains("open")
-    ? '<i class="fa-solid fa-xmark"></i>'
-    : '<i class="fa-solid fa-bars"></i>';
+  const isOpen = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(isOpen));
+
+  const icon = menuBtn.querySelector("i");
+  if (icon) {
+    icon.className = isOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+  }
 }
 
 function navigationSchliessen() {
-  if (!navLinks || !menuBtn) {
-    return;
-  }
+  if (!navLinks || !menuBtn) return;
 
   navLinks.classList.remove("open");
-  menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  menuBtn.setAttribute("aria-expanded", "false");
+
+  const icon = menuBtn.querySelector("i");
+  if (icon) {
+    icon.className = "fa-solid fa-bars";
+  }
 }
 
 function zurSeitenoberkante() {
@@ -125,7 +145,86 @@ function formularPruefen(event) {
   }
 
   alert("Vielen Dank! Deine Nachricht wurde erfolgreich vorbereitet.");
-  kontaktFormular.reset();
+  kontaktFormular?.reset();
+}
+
+function createIcon(className) {
+  const icon = document.createElement("i");
+  icon.className = className;
+  return icon;
+}
+
+function createPillSpan(text) {
+  const span = document.createElement("span");
+  span.className = "pill";
+  span.textContent = text;
+  return span;
+}
+
+function createPillButton(text, onClick) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "pill pill-button";
+  button.textContent = text;
+  button.addEventListener("click", onClick);
+  return button;
+}
+
+function createWeatherItem(label, value) {
+  const item = document.createElement("div");
+  item.className = "wetter-item";
+
+  const title = document.createElement("span");
+  title.textContent = label;
+
+  const strong = document.createElement("strong");
+  strong.textContent = value;
+
+  item.append(title, strong);
+  return item;
+}
+
+function wetterCodeText(code) {
+  const codes = {
+    0: "Klarer Himmel",
+    1: "Überwiegend klar",
+    2: "Teilweise bewölkt",
+    3: "Bedeckt",
+    45: "Neblig",
+    48: "Raureifnebel",
+    51: "Leichter Nieselregen",
+    53: "Mäßiger Nieselregen",
+    55: "Starker Nieselregen",
+    61: "Leichter Regen",
+    63: "Mäßiger Regen",
+    65: "Starker Regen",
+    71: "Leichter Schneefall",
+    73: "Mäßiger Schneefall",
+    75: "Starker Schneefall",
+    80: "Regenschauer",
+    95: "Gewitter"
+  };
+
+  return codes[code] || "Unbekannter Wetterzustand";
+}
+
+function filterAusUrlAnwenden() {
+  const params = new URLSearchParams(window.location.search);
+
+  const land = params.get("land");
+  const schwierigkeit = params.get("schwierigkeit");
+  const saison = params.get("saison");
+  const suche = params.get("suche");
+
+  const landFilter = document.getElementById("landFilter");
+  const schwierigkeitFilter = document.getElementById("schwierigkeitFilter");
+  const saisonFilter = document.getElementById("saisonFilter");
+  const sucheInput = document.getElementById("sucheInput");
+
+  if (land && landFilter) landFilter.value = land;
+  if (schwierigkeit && schwierigkeitFilter) schwierigkeitFilter.value = schwierigkeit;
+  if (saison && saisonFilter) saisonFilter.value = saison;
+  if (suche && sucheInput) sucheInput.value = suche;
 }
 
 function tourenFiltern() {
@@ -139,6 +238,7 @@ function tourenFiltern() {
     const schwierigkeitPasst = schwierigkeit === "alle" || tour.schwierigkeit === schwierigkeit;
     const saisonPasst = saison === "alle" || tour.saison === saison;
     const suchePasst =
+      suche === "" ||
       tour.name.toLowerCase().includes(suche) ||
       tour.beschreibung.toLowerCase().includes(suche) ||
       tour.ort.toLowerCase().includes(suche);
@@ -156,7 +256,7 @@ function tourenKarteErstellen(tour) {
 
   const icon = document.createElement("div");
   icon.className = "card-icon";
-  icon.innerHTML = '<i class="fa-solid fa-mountain"></i>';
+  icon.appendChild(createIcon("fa-solid fa-mountain"));
 
   const titel = document.createElement("h3");
   titel.textContent = tour.name;
@@ -164,22 +264,45 @@ function tourenKarteErstellen(tour) {
   const beschreibung = document.createElement("p");
   beschreibung.textContent = tour.beschreibung;
 
-  const land = document.createElement("p");
-  land.innerHTML = `<strong>Land:</strong> ${tour.land}`;
+  const pillList = document.createElement("div");
+  pillList.className = "pill-list";
 
-  const ort = document.createElement("p");
-  ort.innerHTML = `<strong>Ort:</strong> ${tour.ort}`;
+  const landPill = createPillButton(tour.land, () => {
+    const landFilter = document.getElementById("landFilter");
+    if (landFilter) {
+      landFilter.value = tour.land;
+      tourenRendern();
+    }
+  });
 
-  const schwierigkeit = document.createElement("p");
-  schwierigkeit.innerHTML = `<strong>Schwierigkeit:</strong> ${tour.schwierigkeit}`;
+  const schwierigkeitPill = createPillButton(tour.schwierigkeit, () => {
+    const schwierigkeitFilter = document.getElementById("schwierigkeitFilter");
+    if (schwierigkeitFilter) {
+      schwierigkeitFilter.value = tour.schwierigkeit;
+      tourenRendern();
+    }
+  });
 
-  const saison = document.createElement("p");
-  saison.innerHTML = `<strong>Saison:</strong> ${tour.saison}`;
+  const saisonPill = createPillButton(tour.saison, () => {
+    const saisonFilter = document.getElementById("saisonFilter");
+    if (saisonFilter) {
+      saisonFilter.value = tour.saison;
+      tourenRendern();
+    }
+  });
 
-  const dauer = document.createElement("p");
-  dauer.innerHTML = `<strong>Dauer:</strong> ${tour.dauer}`;
+  const dauerPill = createPillSpan(tour.dauer);
 
-  content.append(icon, titel, beschreibung, land, ort, schwierigkeit, saison, dauer);
+  const ortPill = createPillButton(tour.ort, () => {
+    const sucheInput = document.getElementById("sucheInput");
+    if (sucheInput) {
+      sucheInput.value = tour.ort;
+      tourenRendern();
+    }
+  });
+
+  pillList.append(landPill, schwierigkeitPill, saisonPill, dauerPill, ortPill);
+  content.append(icon, titel, beschreibung, pillList);
   artikel.appendChild(content);
 
   return artikel;
@@ -187,123 +310,214 @@ function tourenKarteErstellen(tour) {
 
 function tourenRendern() {
   const liste = document.getElementById("tourenListe");
-  if (!liste) {
-    return;
-  }
+  if (!liste) return;
 
   const gefilterteTouren = tourenFiltern();
   liste.replaceChildren();
 
+  if (resultInfo) {
+    resultInfo.textContent = `${gefilterteTouren.length} Tour${gefilterteTouren.length === 1 ? "" : "en"} gefunden`;
+  }
+
   if (gefilterteTouren.length === 0) {
     const leerBox = document.createElement("div");
     leerBox.className = "leer-box";
-    leerBox.textContent = "Keine Touren gefunden. Bitte ändere deine Filtereinstellungen.";
+
+    const title = document.createElement("h3");
+    title.textContent = "Keine Touren gefunden";
+
+    const text = document.createElement("p");
+    text.textContent = "Bitte ändere deine Filter oder probiere einen anderen Suchbegriff.";
+
+    leerBox.append(title, text);
     liste.appendChild(leerBox);
     return;
   }
 
   gefilterteTouren.forEach((tour) => {
-    const karte = tourenKarteErstellen(tour);
-    liste.appendChild(karte);
+    liste.appendChild(tourenKarteErstellen(tour));
   });
 }
 
-async function wetterLaden() {
-  const ort = document.getElementById("wetterOrt")?.value;
+function wetterAusgabeRendern(ortName, aktuell, infoText = "") {
   const ausgabe = document.getElementById("wetterAusgabe");
+  if (!ausgabe) return;
 
-  if (!ort || !ausgabe) {
-    return;
-  }
+  ausgabe.replaceChildren();
 
-  ausgabe.textContent = "Wetterdaten werden geladen...";
+  const titel = document.createElement("h3");
+  titel.textContent = `Aktuelles Wetter in ${ortName}`;
 
-  const koordinaten = {
-    "Innsbruck": { lat: 47.2692, lon: 11.4041 },
-    "Zermatt": { lat: 46.0207, lon: 7.7491 },
-    "Cortina d'Ampezzo": { lat: 46.5405, lon: 12.1357 }
-  };
+  const grid = document.createElement("div");
+  grid.className = "wetter-grid";
 
-  const ortDaten = koordinaten[ort];
+  grid.append(
+    createWeatherItem("Temperatur", `${aktuell.temperature_2m} °C`),
+    createWeatherItem("Wind", `${aktuell.wind_speed_10m} km/h`),
+    createWeatherItem("Wetterlage", wetterCodeText(Number(aktuell.weather_code)))
+  );
 
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${ortDaten.lat}&longitude=${ortDaten.lon}&current=temperature_2m,wind_speed_10m,weather_code`;
-    const antwort = await fetch(url);
-    const daten = await antwort.json();
+  ausgabe.append(titel, grid);
 
-    ausgabe.innerHTML = `
-      <h3>Aktuelles Wetter in ${ort}</h3>
-      <p><strong>Temperatur:</strong> ${daten.current.temperature_2m} °C</p>
-      <p><strong>Windgeschwindigkeit:</strong> ${daten.current.wind_speed_10m} km/h</p>
-      <p><strong>Wettercode:</strong> ${daten.current.weather_code}</p>
-    `;
-  } catch (fehler) {
-    ausgabe.textContent = "Die Wetterdaten konnten leider nicht geladen werden.";
+  if (infoText) {
+    const info = document.createElement("p");
+    info.className = "status-zeile";
+    info.textContent = infoText;
+    ausgabe.appendChild(info);
   }
 }
 
-function packlisteElementErstellen(eintrag, index) {
-  const li = document.createElement("li");
-  li.className = eintrag.erledigt ? "pack-item erledigt" : "pack-item";
+async function wetterLaden() {
+  const ortElement = document.getElementById("ortWahl");
+  const ausgabe = document.getElementById("wetterAusgabe");
+
+  if (!ortElement || !ausgabe) return;
+
+  ausgabe.textContent = "Wetterdaten werden geladen...";
+
+  const teile = ortElement.value.split(",");
+  const lat = teile[0];
+  const lon = teile[1];
+  const ortName = teile.slice(2).join(",");
+
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,weather_code&timezone=auto&wind_speed_unit=kmh`;
+    const antwort = await fetch(url);
+
+    if (!antwort.ok) {
+      throw new Error(`HTTP-Fehler ${antwort.status}`);
+    }
+
+    const daten = await antwort.json();
+
+    if (!daten.current) {
+      throw new Error("Keine Wetterdaten vorhanden");
+    }
+
+    wetterAusgabeRendern(ortName, daten.current);
+  } catch (fehler) {
+    const fallback = wetterFallback[ortName];
+
+    if (fallback) {
+      wetterAusgabeRendern(ortName, fallback, "Lokaler Fallback wurde verwendet.");
+    } else {
+      ausgabe.replaceChildren();
+
+      const box = document.createElement("div");
+      box.className = "leer-box";
+
+      const title = document.createElement("h3");
+      title.textContent = "Wetterdaten konnten nicht geladen werden";
+
+      const text = document.createElement("p");
+      text.textContent = "Bitte teste die Seite über Live Server oder versuche eine andere Region.";
+
+      box.append(title, text);
+      ausgabe.appendChild(box);
+    }
+
+    console.error(fehler);
+  }
+}
+
+function packlisteStatusAktualisieren() {
+  const statusText = document.getElementById("statusText");
+  if (!statusText) return;
+
+  const gesamt = packlistenDaten.length;
+  const erledigt = packlistenDaten.filter((eintrag) => eintrag.erledigt).length;
+
+  statusText.textContent = `${gesamt} Gegenstände in der Packliste – ${erledigt} erledigt`;
+}
+
+function packlisteArtikelErstellen(eintrag) {
+  const artikel = document.createElement("article");
+  artikel.className = `pack-item ${eintrag.erledigt ? "erledigt" : ""}`;
 
   const links = document.createElement("div");
   links.className = "pack-item-links";
-  links.innerHTML = `<i class="fa-solid fa-backpack"></i><span>${eintrag.name}</span>`;
+
+  const statusBtn = document.createElement("button");
+  statusBtn.className = "pack-status";
+  statusBtn.type = "button";
+  statusBtn.setAttribute("aria-label", "Status ändern");
+
+  const statusIcon = createIcon("fa-solid fa-check");
+  statusBtn.appendChild(statusIcon);
+  statusBtn.addEventListener("click", () => {
+    eintrag.erledigt = !eintrag.erledigt;
+    packlisteRendern();
+  });
+
+  const textBox = document.createElement("div");
+  textBox.className = "pack-text";
+
+  const title = document.createElement("h3");
+  title.textContent = eintrag.name;
+
+  const text = document.createElement("p");
+  text.textContent = eintrag.beschreibung || "Manuell zur Packliste hinzugefügt";
+
+  textBox.append(title, text);
+  links.append(statusBtn, textBox);
 
   const actions = document.createElement("div");
   actions.className = "pack-actions";
 
   const toggleButton = document.createElement("button");
-  toggleButton.className = "klein-btn";
+  toggleButton.className = "mini-btn toggle-btn";
   toggleButton.type = "button";
-  toggleButton.textContent = eintrag.erledigt ? "Zurücksetzen" : "Erledigt";
+  toggleButton.textContent = eintrag.erledigt ? "Als offen markieren" : "Als eingepackt markieren";
   toggleButton.addEventListener("click", () => {
-    packlistenDaten[index].erledigt = !packlistenDaten[index].erledigt;
+    eintrag.erledigt = !eintrag.erledigt;
     packlisteRendern();
   });
 
-  const loeschenButton = document.createElement("button");
-  loeschenButton.className = "klein-btn loeschen";
-  loeschenButton.type = "button";
-  loeschenButton.textContent = "Löschen";
-  loeschenButton.addEventListener("click", () => {
-    packlistenDaten.splice(index, 1);
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "mini-btn delete-btn";
+  deleteButton.type = "button";
+  deleteButton.append(createIcon("fa-solid fa-trash"), document.createTextNode(" Löschen"));
+  deleteButton.addEventListener("click", () => {
+    packlistenDaten = packlistenDaten.filter((item) => item.id !== eintrag.id);
     packlisteRendern();
   });
 
-  actions.append(toggleButton, loeschenButton);
-  li.append(links, actions);
+  actions.append(toggleButton, deleteButton);
+  artikel.append(links, actions);
 
-  return li;
+  return artikel;
 }
 
 function packlisteRendern() {
-  const liste = document.getElementById("packliste");
-  if (!liste) {
-    return;
-  }
+  const box = document.getElementById("packlisteBox");
+  if (!box) return;
 
-  liste.replaceChildren();
+  box.replaceChildren();
+  packlisteStatusAktualisieren();
 
   if (packlistenDaten.length === 0) {
-    const leerEintrag = document.createElement("li");
-    leerEintrag.className = "leer-box";
-    leerEintrag.textContent = "Die Packliste ist aktuell leer.";
-    liste.appendChild(leerEintrag);
+    const leerBox = document.createElement("div");
+    leerBox.className = "leer-box";
+
+    const title = document.createElement("h3");
+    title.textContent = "Die Packliste ist leer";
+
+    const text = document.createElement("p");
+    text.textContent = "Füge einen neuen Gegenstand hinzu, um mit der Planung zu beginnen.";
+
+    leerBox.append(title, text);
+    box.appendChild(leerBox);
     return;
   }
 
-  packlistenDaten.forEach((eintrag, index) => {
-    const listenelement = packlisteElementErstellen(eintrag, index);
-    liste.appendChild(listenelement);
+  packlistenDaten.forEach((eintrag) => {
+    box.appendChild(packlisteArtikelErstellen(eintrag));
   });
 }
 
 function gegenstandHinzufuegen() {
-  const input = document.getElementById("neuerGegenstand");
-  if (!input) {
-    return;
-  }
+  const input = document.getElementById("gegenstandInput");
+  if (!input) return;
 
   const wert = input.value.trim();
 
@@ -312,12 +526,15 @@ function gegenstandHinzufuegen() {
     return;
   }
 
-  packlistenDaten.push({
+  packlistenDaten.unshift({
+    id: Date.now(),
     name: wert,
+    beschreibung: "Manuell zur Packliste hinzugefügt",
     erledigt: false
   });
 
   input.value = "";
+  input.focus();
   packlisteRendern();
 }
 
@@ -330,16 +547,19 @@ function tourenEventsVerbinden() {
     }
   });
 
-  const wetterLadenBtn = document.getElementById("wetterLadenBtn");
-  if (wetterLadenBtn) {
-    wetterLadenBtn.addEventListener("click", wetterLaden);
+  const wetterBtn = document.getElementById("wetterBtn");
+  if (wetterBtn) {
+    wetterBtn.addEventListener("click", wetterLaden);
   }
 }
 
 function packlisteEventsVerbinden() {
-  const hinzufuegenBtn = document.getElementById("hinzufuegenBtn");
-  if (hinzufuegenBtn) {
-    hinzufuegenBtn.addEventListener("click", gegenstandHinzufuegen);
+  const packForm = document.getElementById("packForm");
+  if (packForm) {
+    packForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      gegenstandHinzufuegen();
+    });
   }
 }
 
@@ -365,11 +585,12 @@ function ereignisseVerbinden() {
 
 function seitenmoduleStarten() {
   if (document.getElementById("tourenListe")) {
+    filterAusUrlAnwenden();
     tourenRendern();
     tourenEventsVerbinden();
   }
 
-  if (document.getElementById("packliste")) {
+  if (document.getElementById("packlisteBox")) {
     packlisteRendern();
     packlisteEventsVerbinden();
   }
@@ -380,7 +601,6 @@ function hauptprogramm() {
   navbarBeimScrollen();
   ereignisseVerbinden();
   seitenmoduleStarten();
-  console.log("GipfelWelt wurde erfolgreich geladen.");
 }
 
 document.addEventListener("DOMContentLoaded", hauptprogramm);
